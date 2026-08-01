@@ -1,0 +1,442 @@
+.page {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    color var(--duration-ui) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.theme-toggle:active {
+  transform: scale(0.94);
+}
+
+.theme-icon {
+  width: 1.45rem;
+  height: 1.45rem;
+  display: block;
+}
+
+.theme-icon--sun {
+  color: #f1cb64;
+}
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% -10%, var(--atmosphere-glow), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 80%, var(--atmosphere-glow), transparent 55%),
+    var(--atmosphere-base);
+  transition: background var(--duration-ui) var(--ease-out);
+}
+
+.atmosphere::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+[data-theme='dark'] .atmosphere::after {
+  opacity: 0.28;
+  mix-blend-mode: soft-light;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 0 2rem;
+}
+
+.hero-avatar-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  border-radius: 50%;
+  line-height: 0;
+  transition: transform var(--duration-press) var(--ease-out);
+}
+
+.hero-avatar-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-avatar-btn:hover {
+    transform: scale(1.02);
+  }
+
+  .hero-avatar-btn:hover:active {
+    transform: scale(0.97);
+  }
+}
+
+.hero-avatar {
+  display: block;
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+
+[data-theme='dark'] .hero-avatar {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.name-art {
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.name-art--hero {
+  width: min(100%, 20rem);
+  height: 4.5rem;
+  margin: 1rem 0 0;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 1.25rem 0 0;
+  gap: 1rem;
+}
+
+.contact-rule {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.22;
+}
+
+.contact-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.contact-logo {
+  display: grid;
+  place-items: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  padding: 0;
+  border: 1px solid var(--ink);
+  border-radius: 0.85rem;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    background var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.contact-logo:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-logo:hover {
+    background: var(--ink);
+    color: var(--page);
+  }
+}
+
+.contact-logo-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+}
+
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--lightbox);
+  backdrop-filter: blur(18px) saturate(120%);
+  cursor: zoom-out;
+}
+
+.contact-panel {
+  width: min(100%, 22rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 2.1rem 1.5rem 1.6rem;
+  border: 1px solid var(--hairline);
+  border-radius: 1.4rem;
+  background: var(--page);
+  color: var(--ink);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  cursor: default;
+}
+
+.contact-panel .name-art--label {
+  width: 6rem;
+  height: 2.6rem;
+}
+
+.contact-panel .name-art--contact {
+  width: min(100%, 18rem);
+  height: 2.8rem;
+  text-align: center;
+}
+
+.contact-panel .name-art--contact .name-art-svg {
+  margin: 0 auto;
+}
+
+.contact-panel-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.15rem;
+}
+
+.contact-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.contact-action:active {
+  transform: scale(0.97);
+}
+
+.contact-action--primary {
+  background: var(--ink);
+  color: var(--page);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-action:hover {
+    background: var(--ink);
+    color: var(--page);
+  }
+
+  .contact-action--primary:hover {
+    opacity: 0.88;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .contact-modal {
+    backdrop-filter: none;
+  }
+}
+
+.name-art--item {
+  flex: 1;
+  min-width: 0;
+  height: 2.4rem;
+  text-align: left;
+}
+
+.name-art--item .name-art-svg {
+  margin-right: auto;
+}
+
+.name-art--label {
+  width: 5.5rem;
+  height: 2.8rem;
+  flex-shrink: 0;
+}
+
+.name-art--contact {
+  width: min(100%, 17rem);
+  height: 2.8rem;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.name-art-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.name-art-core {
+  font-family: var(--font-display);
+  font-weight: 600;
+  dominant-baseline: middle;
+  fill: var(--ink);
+  transition: fill var(--duration-ui) var(--ease-out);
+}
+
+.name-art--hero .name-art-core {
+  font-size: 44px;
+  letter-spacing: 0.18em;
+}
+
+.name-art--item .name-art-core {
+  font-size: 28px;
+  letter-spacing: 0.14em;
+}
+
+.name-art--label .name-art-core {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  fill: var(--ink);
+}
+
+.name-art--contact .name-art-core {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  fill: var(--ink);
+}
+
+.projects {
+  padding: 0;
+}
+
+.project-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    background var(--duration-ui) var(--ease-out),
+    transform var(--duration-press) var(--ease-out);
+}
+
+.project-item:active {
+  transform: scale(0.985);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-item:hover {
+    background: var(--surface-strong);
+  }
+}
+
+.logo-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.45rem;
+  border-radius: 0.8rem;
+  flex-shrink: 0;
+  background: var(--tile);
+  transition: background var(--duration-ui) var(--ease-out);
+}
+
+.logo-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.avatar-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--lightbox);
+  backdrop-filter: blur(16px) saturate(120%);
+  cursor: zoom-out;
+}
+
+.avatar-lightbox-img {
+  max-width: min(90vw, 26rem);
+  max-height: 80svh;
+  width: auto;
+  height: auto;
+  border-radius: 1.1rem;
+  object-fit: contain;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+  cursor: default;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .avatar-lightbox {
+    backdrop-filter: none;
+  }
+}
