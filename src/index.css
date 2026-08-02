@@ -10,6 +10,10 @@
   --hairline: rgba(0, 0, 0, 0.1);
   --page: #ffffff;
   --tile: #f0f0f0;
+  --card: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.12);
+  --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.14);
+  --card-shade: rgba(0, 0, 0, 0.12);
   --atmosphere-glow: rgba(0, 0, 0, 0.04);
   --atmosphere-base: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
   --lightbox: rgba(0, 0, 0, 0.72);
@@ -39,6 +43,10 @@
   --hairline: rgba(255, 255, 255, 0.12);
   --page: #0a0a0a;
   --tile: #1a1a1a;
+  --card: #171717;
+  --card-border: rgba(255, 255, 255, 0.16);
+  --card-shadow: 0 18px 42px rgba(0, 0, 0, 0.55);
+  --card-shade: rgba(0, 0, 0, 0.45);
   --atmosphere-glow: rgba(255, 255, 255, 0.05);
   --atmosphere-base: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
   --lightbox: rgba(0, 0, 0, 0.86);

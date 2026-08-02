@@ -27,9 +27,9 @@ const variantConfig = {
     scale: 8,
   },
   label: {
-    viewBox: '0 0 140 64',
+    viewBox: '0 0 220 64',
     preserveAspectRatio: 'xMidYMid meet',
-    x: 70,
+    x: 110,
     y: 42,
     anchor: 'middle' as const,
     baseFrequency: '0.02 0.04',

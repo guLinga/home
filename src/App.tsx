@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AboutSwiper } from './components/AboutSwiper'
 import { ArtisticName } from './components/ArtisticName'
 import { profile, projects } from './data/profile'
 import './App.css'
@@ -9,7 +10,13 @@ const easeOut = [0.23, 1, 0.32, 1] as const
 const themeKey = 'home-theme'
 
 type Theme = 'light' | 'dark'
-type ContactKind = 'email' | 'wechat'
+type ContactKind = 'about' | 'email' | 'wechat'
+
+const contactTitle: Record<ContactKind, string> = {
+  about: '个性介绍',
+  email: '邮箱',
+  wechat: '微信',
+}
 
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem(themeKey)
@@ -17,6 +24,31 @@ function getInitialTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light'
+}
+
+function AboutIcon() {
+  return (
+    <svg
+      className="contact-logo-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle
+        cx="12"
+        cy="8"
+        r="3.2"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M5.5 19.2c.9-3.1 3.3-4.7 6.5-4.7s5.6 1.6 6.5 4.7"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
 }
 
 function EmailIcon() {
@@ -138,6 +170,8 @@ function App() {
     }
   }
 
+  const showCopy = contactOpen === 'email' || contactOpen === 'wechat'
+
   return (
     <div className="page">
       <div className="atmosphere" aria-hidden="true" />
@@ -205,6 +239,14 @@ function App() {
           >
             <div className="contact-rule" aria-hidden="true" />
             <div className="contact-logos">
+              <button
+                type="button"
+                className="contact-logo"
+                aria-label="查看个性介绍"
+                onClick={() => setContactOpen('about')}
+              >
+                <AboutIcon />
+              </button>
               <button
                 type="button"
                 className="contact-logo"
@@ -296,7 +338,7 @@ function App() {
             className="contact-modal"
             role="dialog"
             aria-modal="true"
-            aria-label={contactOpen === 'email' ? '邮箱' : '微信'}
+            aria-label={contactTitle[contactOpen]}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -304,7 +346,7 @@ function App() {
             onClick={() => setContactOpen(null)}
           >
             <motion.div
-              className="contact-panel"
+              className={`contact-panel${contactOpen === 'about' ? ' contact-panel--about' : ''}`}
               initial={
                 reduceMotion
                   ? { opacity: 0 }
@@ -323,20 +365,27 @@ function App() {
               onClick={(event) => event.stopPropagation()}
             >
               <ArtisticName
-                text={contactOpen === 'email' ? '邮箱' : '微信'}
+                text={contactTitle[contactOpen]}
                 variant="label"
               />
-              <ArtisticName text={contactValue} variant="contact" />
 
-              <div className="contact-panel-actions">
-                <button
-                  type="button"
-                  className="contact-action contact-action--primary"
-                  onClick={copyValue}
-                >
-                  {copied ? '已复制' : '复制'}
-                </button>
-              </div>
+              {contactOpen === 'about' ? (
+                <AboutSwiper key="about-swiper" cards={profile.about} />
+              ) : (
+                <ArtisticName text={contactValue} variant="contact" />
+              )}
+
+              {showCopy && (
+                <div className="contact-panel-actions">
+                  <button
+                    type="button"
+                    className="contact-action contact-action--primary"
+                    onClick={copyValue}
+                  >
+                    {copied ? '已复制' : '复制'}
+                  </button>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         )}

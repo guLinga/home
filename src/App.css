@@ -204,6 +204,7 @@ main {
   background: var(--lightbox);
   backdrop-filter: blur(18px) saturate(120%);
   cursor: zoom-out;
+  overflow: auto;
 }
 
 .contact-panel {
@@ -219,6 +220,82 @@ main {
   color: var(--ink);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
   cursor: default;
+}
+
+.contact-panel--about {
+  width: min(100%, 22rem);
+  align-items: center;
+  overflow: visible;
+  padding: 2rem 2.75rem 2.25rem;
+}
+
+.contact-panel--about .name-art--label {
+  width: 10rem;
+  height: 3rem;
+  align-self: center;
+  margin-bottom: 0.35rem;
+}
+
+/* 官方 cards 示例：容器固定宽高 + overflow visible */
+.about-swiper {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-cards-swiper {
+  width: min(100%, 15.5rem);
+  height: 20rem;
+}
+
+.about-cards-swiper.swiper {
+  overflow: visible;
+}
+
+.about-cards-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.15rem;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  box-shadow: var(--card-shadow);
+  color: var(--ink);
+  transition:
+    background var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out),
+    box-shadow var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out);
+}
+
+.about-cards-swiper .swiper-slide-shadow,
+.about-cards-swiper .swiper-slide-shadow-cards {
+  background: var(--card-shade) !important;
+  border-radius: inherit;
+}
+
+.about-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  height: 100%;
+  padding: 1.35rem 1.15rem;
+  box-sizing: border-box;
+}
+
+.about-card-content p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  text-align: center;
+  white-space: pre-wrap;
+  transition: color var(--duration-ui) var(--ease-out);
 }
 
 .contact-panel .name-art--label {
